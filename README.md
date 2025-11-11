@@ -1,6 +1,7 @@
 # DevOps Intern Final Assessment
 
 **Name:** Ranjan Shrestha
+
 **Date:** 11 November 2025
 
 ## Description
@@ -31,9 +32,9 @@ This repository demonstrates solutions for the DevOps Intern Final Assessment. I
         ```
     - Run the job
         ```
-        nomand job run nomad/hello.nomad
+        nomad job run nomad/hello.nomad
         ```
+        ![Nomad Job](./results_ss/nomad_job.png)
 
 ### Monitoring with Grafana Loki
-- Set up log collection using alloy, log aggregation using loki and visualization with Grafana. The details steps are described in `loki_setup.md` under `monitoring` folder.
-![Logs](./results_ss/logs.png)
+- Set up log collection using alloy, log aggregation using loki and visualization with Grafana. The detailed steps are described in `loki_setup.md` under `monitoring` folder.

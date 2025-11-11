@@ -57,6 +57,11 @@ In Grafana:
 {image_name=~".*nginx.*"}
 ```
 
+## Results
+
+![Logs](../results_ss/logs.png)
+
+
 ## Configuration Files
 
 - **docker-compose.yml**: Main Docker Compose configuration
