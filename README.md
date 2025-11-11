@@ -21,6 +21,7 @@ This repository demonstrates solutions for the DevOps Intern Final Assessment. I
 
 ### GitHub Actions
 - Implemented a GitHub Actions workflow to automatically run `python hello.py` on every push to the `main` branch.
+![Github_Actions](./results_ss/github_actions.png)
 
 ### Nomad
 - Created a Nomad job specification `hello.nomad` inside `nomad` folder to run a Docker container as a service.
@@ -34,4 +35,5 @@ This repository demonstrates solutions for the DevOps Intern Final Assessment. I
         ```
 
 ### Monitoring with Grafana Loki
-- Set up log collection using alloy, log aggregation using loki and visualization with Grafana. The details steps is described in `loki_setup.txt` under `monitoring` folder.
+- Set up log collection using alloy, log aggregation using loki and visualization with Grafana. The details steps are described in `loki_setup.md` under `monitoring` folder.
+![Logs](./results_ss/logs.png)
