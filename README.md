@@ -1,6 +1,7 @@
 # DevOps Intern Final Assessment
 
-**Name:** Ranjan Shresth
+**Name:** Ranjan Shrestha
+**Date:** 11 November 2025
 
 ## Description
 
@@ -8,11 +9,11 @@ This repository demonstrates solutions for the DevOps Intern Final Assessment. I
 
 ### Git and GitHub
 - Initialized a GitHub repository named `devops-intern-final`.
-- Added a `hello.sh` script that outputs a "Hello DevOps" message.
+- Added a `hello.py` script that outputs a "Hello DevOps" message.
 - Created a `README.md` file documenting the project.
 
 ### Bash Scripting
-- Developed a `sysinfo.sh` script inside the `scripts` folder to display system information and required messages.
+- Developed a `sysinfo.sh` script inside the `scripts` folder to display system information.
 
 ### Docker
 - Wrote a `Dockerfile` to containerize the `hello.py` script.
@@ -22,7 +23,15 @@ This repository demonstrates solutions for the DevOps Intern Final Assessment. I
 - Implemented a GitHub Actions workflow to automatically run `python hello.py` on every push to the `main` branch.
 
 ### Nomad
-- Created a Nomad job specification to run a Docker container as a service.
+- Created a Nomad job specification `hello.nomad` inside `nomad` folder to run a Docker container as a service.
+    - Run the nomad agent
+        ```
+        nomad agent -dev
+        ```
+    - Run the job
+        ```
+        nomand job run nomad/hello.nomad
+        ```
 
 ### Monitoring with Grafana Loki
-- Set up log collection and monitoring using Grafana Loki.
+- Set up log collection using alloy, log aggregation using loki and visualization with Grafana. The details steps is described in `loki_setup.txt` under `monitoring` folder.
