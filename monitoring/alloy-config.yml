@@ -1,0 +1,63 @@
+// Alloy configuration to collect Docker logs and send them to Loki
+
+discovery.docker "docker_sd" {
+  host = "unix:///var/run/docker.sock"
+}
+
+discovery.relabel "docker_sd" {
+  targets = discovery.docker.docker_sd.targets
+
+  // Extract container name as label
+  rule {
+    source_labels = ["__meta_docker_container_name"]
+    target_label = "container_name"
+  }
+
+  // Extract container image as label
+  rule {
+    source_labels = ["__meta_docker_container_image_name"]
+    target_label = "image_name"
+  }
+
+  // Extract service label if present
+  rule {
+    source_labels = ["__meta_docker_container_label_service"]
+    target_label = "service"
+  }
+
+  // Set the job to the container name
+  rule {
+    source_labels = ["__meta_docker_container_name"]
+    target_label = "job"
+  }
+
+  // Extract labels from container
+  rule {
+    regex = "__meta_docker_container_label_(.+)"
+    source_labels = ["__meta_docker_container_label_.*"]
+    target_label = "${1}"
+  }
+}
+
+loki.source.docker "docker_logs" {
+  host       = "unix:///var/run/docker.sock"
+  targets    = discovery.relabel.docker_sd.output
+  relabel_rules = discovery.relabel.docker_sd.rules
+  forward_to = [loki.process.add_attributes.receiver]
+}
+
+loki.process "add_attributes" {
+  stage.labels {
+    values = {
+      job       = "docker",
+      hostname  = "{{ env \"HOSTNAME\" }}",
+    }
+  }
+  forward_to = [loki.write.loki.receiver]
+}
+
+loki.write "loki" {
+  endpoint {
+    url = "http://loki:3100/loki/api/v1/push"
+  }
+}
