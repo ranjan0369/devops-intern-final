@@ -22,7 +22,6 @@ jobs:
 
     - name: Publish Docker Image to Docker Hub
       env:
-      REGISTRY_ADDRESS: docker.io
       REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
       REGISTRY_PASSWD: ${{ secrets.REGISTRY_PASSWD }}
       run: |
