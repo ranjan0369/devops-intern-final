@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3    
+    - uses: actions/checkout@v3
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
@@ -21,6 +21,10 @@ jobs:
         docker build -t ranjanxth/springer-hello:latest .
 
     - name: Publish Docker Image to Docker Hub
+      env:
+      REGISTRY_ADDRESS: docker.io
+      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_PASSWD: ${{ secrets.REGISTRY_PASSWD }}
       run: |
         echo "${{ secrets.REGISTRY_PASSWD }}" | docker login docker.io/ranjanxth -u "${{ secrets.REGISTRY_USERNAME }}" --password-stdin
         docker push docker.io/ranjanxth/springer-hello:latest
