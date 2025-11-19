@@ -6,16 +6,21 @@ on:
       - main
 
 jobs:
-  test:
+  build_and_push:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    
+    - uses: actions/checkout@v3    
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.x'
-    
-    - name: Run Python script
-      run: python hello.py
+        python-version: '3.x'    
+
+    - name: Build Docker image
+      run: |
+        docker build -t ranjanxth/springer-hello:latest .
+
+    - name: Publish Docker Image to Docker Hub
+      run: |
+        echo "${{ secrets.REGISTRY_PASSWD }}" | docker login docker.io/ranjanxth -u "${{ secrets.REGISTRY_USERNAME }}" --password-stdin
+        docker push docker.io/ranjanxth/springer-hello:latest
