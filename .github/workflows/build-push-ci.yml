@@ -4,6 +4,7 @@ on:
   push:
     branches: [ "main" ]
 
+
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -12,29 +13,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Debug secrets presence (does NOT reveal values)
-        run: |
-          if [ -z "${{ secrets.DOCKERHUB_USERNAME }}" ]; then
-            echo "❌ DOCKERHUB_USERNAME is NOT set!"
-            exit 1
-          else
-            echo "✔ DOCKERHUB_USERNAME is set."
-          fi
-
-          if [ -z "${{ secrets.DOCKERHUB_PASSWORD }}" ]; then
-            echo "❌ DOCKERHUB_PASSWORD is NOT set!"
-            exit 1
-          else
-            echo "✔ DOCKERHUB_PASSWORD is set."
-          fi
-
       - name: Login to Docker Hub
         run: |
           echo "${{ secrets.DOCKERHUB_PASSWORD }}" | \
           docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/your-image-name:latest .
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/springer-hello:latest .
 
       - name: Push Docker image
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/your-image-name:latest
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/springer-hello:latest
