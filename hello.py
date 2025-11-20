@@ -1,6 +1,6 @@
-from time import time
+from time import sleep
 
 
 while True:
     print("Hello, DevOps!!!") #This logic will print Hello, DevOps!!! every minute so that the container doesn't exit immediately.
-    time.sleep(60)
+    sleep(3)
