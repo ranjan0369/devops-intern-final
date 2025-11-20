@@ -1,3 +1,5 @@
-from time import sleep
-print("Hello, DevOps!!!") #This logic will print Hello, DevOps!!! and wait so that the container doesn't exit immediately.
-sleep(300)
+import time
+
+print("Hello World")
+while True:
+    time.sleep(60)  #This ensures the container keeps running
