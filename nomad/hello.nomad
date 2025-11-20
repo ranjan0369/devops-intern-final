@@ -9,7 +9,7 @@ job "hello" {
       driver = "docker"
 
       config {
-        image = "nginx:latest"
+        image = "ranjanxth/springer-hello:latest"
       }
 
       resources {
