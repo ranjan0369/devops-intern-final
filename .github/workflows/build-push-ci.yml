@@ -1,34 +1,40 @@
-name: build-and-push
+name: Debug Docker Build & Push
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
 
 jobs:
-  build:
+  docker:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Check Docker Hub secrets
+      - name: Debug secrets presence (does NOT reveal values)
         run: |
-          if [ -z "${{ secrets.DOCKERHUB_USERNAME }}" ] || [ -z "${{ secrets.DOCKERHUB_PASSWORD }}" ]; then
-            echo "Missing DOCKERHUB_USERNAME or DOCKERHUB_PASSWORD repository secrets."
-            echo "Add them at: Settings → Secrets and variables → Actions"
+          if [ -z "${{ secrets.DOCKERHUB_USERNAME }}" ]; then
+            echo "❌ DOCKERHUB_USERNAME is NOT set!"
             exit 1
+          else
+            echo "✔ DOCKERHUB_USERNAME is set."
           fi
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          if [ -z "${{ secrets.DOCKERHUB_PASSWORD }}" ]; then
+            echo "❌ DOCKERHUB_PASSWORD is NOT set!"
+            exit 1
+          else
+            echo "✔ DOCKERHUB_PASSWORD is set."
+          fi
 
-      - name: Build and push
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/devops-intern-final:latest
+      - name: Login to Docker Hub
+        run: |
+          echo "${{ secrets.DOCKERHUB_PASSWORD }}" | \
+          docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/your-image-name:latest .
+
+      - name: Push Docker image
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/your-image-name:latest
