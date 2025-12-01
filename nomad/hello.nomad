@@ -1,8 +1,8 @@
-job "hello" {
+job "hello-app" {
   datacenters = ["dc1"]
   type = "service"
 
-  group "app" {
+  group "hello-app" {
     count = 1
 
     task "hello-app" {
