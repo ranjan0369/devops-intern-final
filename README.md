@@ -21,7 +21,7 @@ This repository demonstrates solutions for the DevOps Intern Final Assessment. I
 - Successfully built and ran the Docker container.
 
 ### GitHub Actions
-- Implemented a GitHub Actions workflow to automatically build new image for our python script and also push to Dockerhub in every push to the `main` branch.
+- Implemented a GitHub Actions workflow to automatically build new image for our python script and also push to Dockerhub in every push to the `main` branch. The pipeline builds and pushes two images one with `latest` tag and another with `github sha` tag.
 ![Github_Actions](./results_ss/github_actions.png)
 
 ### Nomad
